@@ -6,9 +6,10 @@ import (
 
 func Test_ReadFile(t *testing.T) {
 
-	filePath := "../LICENSE"
+	path := "../LICENSE"
+	//path := "https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.7.18/spring-boot-dependencies-2.7.18.pom"
 
-	str, err := ReadFile(filePath)
+	str, err := ReadFile(path)
 	if err != nil {
 		t.Fatalf("无法读取文件: %v", err)
 	}
@@ -18,9 +19,10 @@ func Test_ReadFile(t *testing.T) {
 
 func Test_ReadFileLines(t *testing.T) {
 
-	filePath := "../LICENSE"
+	path := "../LICENSE"
+	//path := "https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.7.18/spring-boot-dependencies-2.7.18.pom"
 
-	lines, err := ReadFileLines(filePath)
+	lines, err := ReadFileLines(path)
 	if err != nil {
 		t.Fatalf("无法读取文件: %v", err)
 	}
@@ -32,9 +34,10 @@ func Test_ReadFileLines(t *testing.T) {
 
 func Test_ReadFileLinesTrimSpace(t *testing.T) {
 
-	filePath := "../LICENSE"
+	path := "../LICENSE"
+	// path := "https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies/2.7.18/spring-boot-dependencies-2.7.18.pom"
 
-	lines, err := ReadFileLinesTrimSpace(filePath)
+	lines, err := ReadFileLinesTrimSpace(path)
 	if err != nil {
 		t.Fatalf("无法读取文件: %v", err)
 	}
