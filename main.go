@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/xuxiaowei-com-cn/git-go/buildinfo"
+	"github.com/xuxiaowei-com-cn/maven-dependencies/command"
 	"gopkg.in/yaml.v3"
 	"log"
 	"os"
@@ -56,7 +57,9 @@ func main() {
 		Authors:   []*cli.Author{{Name: Author, Email: Email}},
 		Usage:     Description,
 		Copyright: Copyright,
-		Commands:  []*cli.Command{},
+		Commands: []*cli.Command{
+			command.DependencyCommand(),
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
