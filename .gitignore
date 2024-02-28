@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/*.exe
+/*/*.exe
+/maven-dependencies-windows-*
+/maven-dependencies-linux-*
+/maven-dependencies-darwin-*
+
+/buildinfo/buildinfo
