@@ -52,28 +52,28 @@ func EditDependencyCommand() *cli.Command {
 				return err
 			}
 
-			parsedDependencies, err := types.ParseDependencies(fileContext)
+			_, dependencies, err := types.Dependencies(fileContext)
 			if err != nil {
 				return err
 			}
 
-			var dependency types.Dependency
-			for _, parsedDependency := range parsedDependencies {
-				if parsedDependency.GroupId == groupId && parsedDependency.ArtifactId == artifactId && parsedDependency.Version == version {
-					dependency.GroupId = parsedDependency.GroupId
-					dependency.GroupIdLine = parsedDependency.GroupIdLine
-					dependency.ArtifactId = parsedDependency.ArtifactId
-					dependency.ArtifactIdLine = parsedDependency.ArtifactIdLine
-					dependency.Version = parsedDependency.Version
-					dependency.VersionLine = parsedDependency.VersionLine
+			var dependencyResult types.Dependency
+			for _, dependency := range dependencies {
+				if dependency.GroupId == groupId && dependency.ArtifactId == artifactId && dependency.Version == version {
+					dependencyResult.GroupId = dependency.GroupId
+					dependencyResult.GroupIdLine = dependency.GroupIdLine
+					dependencyResult.ArtifactId = dependency.ArtifactId
+					dependencyResult.ArtifactIdLine = dependency.ArtifactIdLine
+					dependencyResult.Version = dependency.Version
+					dependencyResult.VersionLine = dependency.VersionLine
 					break
 				}
 			}
 
-			if dependency.GroupId != "" {
-				var groupIdLine = dependency.GroupIdLine
-				var artifactIdLine = dependency.ArtifactIdLine
-				var versionLine = dependency.VersionLine
+			if dependencyResult.GroupId != "" {
+				var groupIdLine = dependencyResult.GroupIdLine
+				var artifactIdLine = dependencyResult.ArtifactIdLine
+				var versionLine = dependencyResult.VersionLine
 
 				var result string
 				for index, line := range fileContextLines {

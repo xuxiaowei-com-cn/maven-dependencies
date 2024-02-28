@@ -34,15 +34,57 @@ func Context(str string) (string, error) {
 	return strings.TrimRight(strings.TrimLeft(matches[0], ">"), "<"), nil
 }
 
-func ParseDependencies(str string) ([]Dependency, error) {
-	var parsedDependencies []Dependency
+func Dependencies(str string) (Dependency, []Dependency, error) {
+	var parent Dependency
+	var dependencies []Dependency
 
 	lines := strings.Split(str, "\n")
 
+	parentStart := false
 	dependenciesStart := false
 	dependencyStart := false
 	add := false
 	for index, line := range lines {
+
+		if strings.HasPrefix(line, "<parent") {
+			parentStart = true
+			continue
+		} else if strings.HasPrefix(line, "</parent") {
+			parentStart = false
+			continue
+		}
+
+		if parentStart {
+			if strings.HasPrefix(line, "<groupId") {
+
+				c, err := Context(line)
+				if err != nil {
+					return parent, nil, err
+				}
+
+				parent.GroupId = c
+				parent.GroupIdLine = index + 1
+
+			} else if strings.HasPrefix(line, "<artifactId") {
+				c, err := Context(line)
+				if err != nil {
+					return parent, nil, err
+				}
+
+				parent.ArtifactId = c
+				parent.ArtifactIdLine = index + 1
+
+			} else if strings.HasPrefix(line, "<version") {
+				c, err := Context(line)
+				if err != nil {
+					return parent, nil, err
+				}
+
+				parent.Version = c
+				parent.VersionLine = index + 1
+			}
+		}
+
 		if strings.HasPrefix(line, "<dependencies") {
 			dependenciesStart = true
 			continue
@@ -67,15 +109,15 @@ func ParseDependencies(str string) ([]Dependency, error) {
 
 					c, err := Context(line)
 					if err != nil {
-						return nil, err
+						return parent, nil, err
 					}
 
 					if add {
-						dependency := parsedDependencies[len(parsedDependencies)-1]
+						dependency := dependencies[len(dependencies)-1]
 						dependency.GroupId = c
 						dependency.GroupIdLine = index + 1
 					} else {
-						parsedDependencies = append(parsedDependencies, Dependency{
+						dependencies = append(dependencies, Dependency{
 							GroupId:     c,
 							GroupIdLine: index + 1,
 						})
@@ -85,16 +127,16 @@ func ParseDependencies(str string) ([]Dependency, error) {
 				} else if strings.HasPrefix(line, "<artifactId") {
 					c, err := Context(line)
 					if err != nil {
-						return nil, err
+						return parent, nil, err
 					}
 
 					if add {
-						dependency := parsedDependencies[len(parsedDependencies)-1]
+						dependency := dependencies[len(dependencies)-1]
 						dependency.ArtifactId = c
 						dependency.ArtifactIdLine = index + 1
-						parsedDependencies[len(parsedDependencies)-1] = dependency
+						dependencies[len(dependencies)-1] = dependency
 					} else {
-						parsedDependencies = append(parsedDependencies, Dependency{
+						dependencies = append(dependencies, Dependency{
 							ArtifactId:     c,
 							ArtifactIdLine: index + 1,
 						})
@@ -103,16 +145,16 @@ func ParseDependencies(str string) ([]Dependency, error) {
 				} else if strings.HasPrefix(line, "<version") {
 					c, err := Context(line)
 					if err != nil {
-						return nil, err
+						return parent, nil, err
 					}
 
 					if add {
-						dependency := parsedDependencies[len(parsedDependencies)-1]
+						dependency := dependencies[len(dependencies)-1]
 						dependency.Version = c
 						dependency.VersionLine = index + 1
-						parsedDependencies[len(parsedDependencies)-1] = dependency
+						dependencies[len(dependencies)-1] = dependency
 					} else {
-						parsedDependencies = append(parsedDependencies, Dependency{
+						dependencies = append(dependencies, Dependency{
 							Version:     c,
 							VersionLine: index + 1,
 						})
@@ -123,5 +165,5 @@ func ParseDependencies(str string) ([]Dependency, error) {
 		}
 	}
 
-	return parsedDependencies, nil
+	return parent, dependencies, nil
 }
