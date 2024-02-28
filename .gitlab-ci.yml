@@ -1,5 +1,6 @@
 stages:
   - build
+  - sync
 
 build:golang:1.21:
   stage: build
@@ -55,3 +56,8 @@ build:golang:1.21-alpine3.18:
     expire_in: 3 day
     paths:
       - maven-dependencies-*
+
+# 嵌入
+include:
+  # 同步代码
+  - /sync.yml
