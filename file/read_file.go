@@ -16,20 +16,6 @@ func isURL(s string) bool {
 	return u.Scheme != "" && u.Host != ""
 }
 
-func ReadFile(path string) (string, error) {
-	var bytes []byte
-	var err error
-	if isURL(path) {
-		bytes, err = get(path)
-	} else {
-		bytes, err = os.ReadFile(path)
-	}
-	if err != nil {
-		return "", err
-	}
-	return string(bytes), nil
-}
-
 func get(path string) ([]byte, error) {
 
 	resp, err := http.Get(path)
@@ -44,6 +30,35 @@ func get(path string) ([]byte, error) {
 	}
 
 	return bytes, nil
+}
+
+func ReadFile(path string) (string, error) {
+	var bytes []byte
+	var err error
+	if isURL(path) {
+		bytes, err = get(path)
+	} else {
+		bytes, err = os.ReadFile(path)
+	}
+	if err != nil {
+		return "", err
+	}
+	return string(bytes), nil
+}
+
+func ReadFileTrimSpace(path string) (string, error) {
+	strs, err := ReadFileLinesTrimSpace(path)
+	if err != nil {
+		return "", err
+	}
+	var result string
+	for i, _ := range strs {
+		if i != 0 {
+			result += "\n"
+		}
+		result += strs[i]
+	}
+	return result, nil
 }
 
 func ReadFileLines(path string) ([]string, error) {
