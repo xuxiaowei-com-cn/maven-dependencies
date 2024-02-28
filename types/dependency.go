@@ -25,14 +25,22 @@ func Context(str string) (string, error) {
 	return strings.TrimRight(strings.TrimLeft(matches[0], ">"), "<"), nil
 }
 
-func Dependencies(str string) (Dependency, []Dependency, error) {
+func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
+	var current Dependency
 	var parent Dependency
 	var dependencies []Dependency
 
 	lines := strings.Split(str, "\n")
 
 	parentStart := false
+	distributionManagementStart := false
+	dependencyManagementStart := false
 	dependenciesStart := false
+	dependenciesExclusionStart := false
+	buildStart := false
+	reportingStart := false
+	profileStart := false
+
 	dependencyStart := false
 	add := false
 	for index, line := range lines {
@@ -45,12 +53,89 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 			continue
 		}
 
+		if strings.HasPrefix(line, "<distributionManagement") {
+			distributionManagementStart = true
+			continue
+		} else if strings.HasPrefix(line, "</distributionManagement") {
+			distributionManagementStart = false
+			continue
+		}
+
+		if strings.HasPrefix(line, "<dependencyManagement") {
+			dependencyManagementStart = true
+			continue
+		} else if strings.HasPrefix(line, "</dependencyManagement") {
+			dependencyManagementStart = false
+			continue
+		}
+
+		if strings.HasPrefix(line, "<build") {
+			buildStart = true
+			continue
+		} else if strings.HasPrefix(line, "</build") {
+			buildStart = false
+			continue
+		}
+
+		if strings.HasPrefix(line, "<reporting") {
+			reportingStart = true
+			continue
+		} else if strings.HasPrefix(line, "</reporting") {
+			reportingStart = false
+			continue
+		}
+
+		if strings.HasPrefix(line, "<profile") {
+			profileStart = true
+			continue
+		} else if strings.HasPrefix(line, "</profile") {
+			profileStart = false
+			continue
+		}
+
+		if !parentStart && !distributionManagementStart && !dependencyManagementStart && !buildStart && !reportingStart && !profileStart {
+			// 不是 <parent> 标签内的坐标
+			// 不是 <distributionManagement> 标签内的坐标
+			// 不是 <dependencyManagement> 标签内的坐标
+			// 不是 <build> 标签内的坐标
+			// 不是 <reporting> 标签内的坐标
+			// 不是 <profile> 标签内的坐标
+			if strings.HasPrefix(line, "<groupId") {
+
+				c, err := Context(line)
+				if err != nil {
+					return current, parent, nil, err
+				}
+
+				current.GroupId = c
+				current.GroupIdLine = index + 1
+
+			} else if strings.HasPrefix(line, "<artifactId") {
+				c, err := Context(line)
+				if err != nil {
+					return current, parent, nil, err
+				}
+
+				current.ArtifactId = c
+				current.ArtifactIdLine = index + 1
+
+			} else if strings.HasPrefix(line, "<version") {
+				c, err := Context(line)
+				if err != nil {
+					return current, parent, nil, err
+				}
+
+				current.Version = c
+				current.VersionLine = index + 1
+			}
+		}
+
 		if parentStart {
 			if strings.HasPrefix(line, "<groupId") {
 
 				c, err := Context(line)
 				if err != nil {
-					return parent, nil, err
+					return current, parent, nil, err
 				}
 
 				parent.GroupId = c
@@ -59,7 +144,7 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 			} else if strings.HasPrefix(line, "<artifactId") {
 				c, err := Context(line)
 				if err != nil {
-					return parent, nil, err
+					return current, parent, nil, err
 				}
 
 				parent.ArtifactId = c
@@ -68,7 +153,7 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 			} else if strings.HasPrefix(line, "<version") {
 				c, err := Context(line)
 				if err != nil {
-					return parent, nil, err
+					return current, parent, nil, err
 				}
 
 				parent.Version = c
@@ -86,6 +171,19 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 
 		if dependenciesStart {
 
+			if strings.HasPrefix(line, "<exclusion") {
+				dependenciesExclusionStart = true
+				continue
+			} else if strings.HasPrefix(line, "</exclusion") {
+				dependenciesExclusionStart = false
+				add = false
+				continue
+			}
+
+			if dependenciesExclusionStart {
+				continue
+			}
+
 			if strings.HasPrefix(line, "<dependency") {
 				dependencyStart = true
 				continue
@@ -100,7 +198,7 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 
 					c, err := Context(line)
 					if err != nil {
-						return parent, nil, err
+						return current, parent, nil, err
 					}
 
 					if add {
@@ -118,7 +216,7 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 				} else if strings.HasPrefix(line, "<artifactId") {
 					c, err := Context(line)
 					if err != nil {
-						return parent, nil, err
+						return current, parent, nil, err
 					}
 
 					if add {
@@ -136,7 +234,7 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 				} else if strings.HasPrefix(line, "<version") {
 					c, err := Context(line)
 					if err != nil {
-						return parent, nil, err
+						return current, parent, nil, err
 					}
 
 					if add {
@@ -156,5 +254,5 @@ func Dependencies(str string) (Dependency, []Dependency, error) {
 		}
 	}
 
-	return parent, dependencies, nil
+	return current, parent, dependencies, nil
 }

@@ -52,7 +52,7 @@ func EditDependencyCommand() *cli.Command {
 				return err
 			}
 
-			_, dependencies, err := types.Dependencies(fileContext)
+			_, _, dependencies, err := types.Dependencies(fileContext)
 			if err != nil {
 				return err
 			}
