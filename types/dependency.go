@@ -5,15 +5,6 @@ import (
 	"strings"
 )
 
-type Dependency struct {
-	GroupId        string
-	GroupIdLine    int
-	ArtifactId     string
-	ArtifactIdLine int
-	Version        string
-	VersionLine    int
-}
-
 func Context(str string) (string, error) {
 	re, err := regexp.Compile(">[^<]*<")
 	if err != nil {
