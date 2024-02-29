@@ -14,7 +14,7 @@ import (
 func DependencyCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "dependency",
-		Usage: "Maven 坐标",
+		Usage: "Maven 依赖坐标",
 		Flags: []cli.Flag{
 			flag.FilePathFlag(false),
 			flag.GroupIdFlag(false), flag.ArtifactIdFlag(false),
@@ -29,7 +29,7 @@ func DependencyCommand() *cli.Command {
 func EditDependencyCommand() *cli.Command {
 	return &cli.Command{
 		Name:  "edit",
-		Usage: "修改 Maven 坐标",
+		Usage: "修改 Maven 依赖坐标",
 		Flags: []cli.Flag{
 			flag.FilePathFlag(true),
 			flag.GroupIdFlag(true), flag.ArtifactIdFlag(true),

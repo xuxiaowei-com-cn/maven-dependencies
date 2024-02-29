@@ -59,6 +59,7 @@ func main() {
 		Copyright: Copyright,
 		Commands: []*cli.Command{
 			command.DependencyCommand(),
+			command.CurrentCommand(),
 		},
 	}
 

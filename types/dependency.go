@@ -93,7 +93,7 @@ func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
 			continue
 		}
 
-		if !parentStart && !distributionManagementStart && !dependencyManagementStart && !buildStart && !reportingStart && !profileStart {
+		if !parentStart && !distributionManagementStart && !dependencyManagementStart && !buildStart && !reportingStart && !profileStart && !dependenciesStart {
 			// 不是 <parent> 标签内的坐标
 			// 不是 <distributionManagement> 标签内的坐标
 			// 不是 <dependencyManagement> 标签内的坐标

@@ -188,7 +188,8 @@ AUTHOR:
    徐晓伟 <xuxiaowei@xuxiaowei.com.cn>
 
 COMMANDS:
-   dependency  Maven 坐标
+   dependency  Maven 依赖坐标
+   current     Maven 当前坐标
    help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
@@ -202,13 +203,13 @@ COPYRIGHT:
 ```shell
 $ go run main.go dependency --help
 NAME:
-   maven-dependencies dependency - Maven 坐标
+   maven-dependencies dependency - Maven 依赖坐标
 
 USAGE:
    maven-dependencies dependency command [command options]
 
 COMMANDS:
-   edit     修改 Maven 坐标
+   edit     修改 Maven 依赖坐标
    help, h  Shows a list of commands or help for one command
 
 OPTIONS:
@@ -221,7 +222,7 @@ OPTIONS:
 ```shell
 $ go run main.go dependency edit --help
 NAME:
-   maven-dependencies dependency edit - 修改 Maven 坐标
+   maven-dependencies dependency edit - 修改 Maven 依赖坐标
 
 USAGE:
    maven-dependencies dependency edit [command options] [arguments...]
@@ -230,6 +231,42 @@ OPTIONS:
    --file-path value          File Path
    --group-id value           Maven groupId
    --artifact-id value        Maven artifactId
+   --after-group-id value     After Maven groupId
+   --after-artifact-id value  After Maven artifactId
+   --after-version value      After Maven version
+   --help, -h                 show help
+```
+
+```shell
+$ go run main.go current --help
+NAME:
+   maven-dependencies current - Maven 当前坐标
+
+USAGE:
+   maven-dependencies current command [command options]
+
+COMMANDS:
+   edit     修改 Maven 当前坐标
+   help, h  Shows a list of commands or help for one command
+
+OPTIONS:
+   --file-path value          File Path
+   --after-group-id value     After Maven groupId
+   --after-artifact-id value  After Maven artifactId
+   --after-version value      After Maven version
+   --help, -h                 show help
+```
+
+```shell
+$ go run main.go current edit --help
+NAME:
+   maven-dependencies current edit - 修改 Maven 当前坐标
+
+USAGE:
+   maven-dependencies current edit [command options] [arguments...]
+
+OPTIONS:
+   --file-path value          File Path
    --after-group-id value     After Maven groupId
    --after-artifact-id value  After Maven artifactId
    --after-version value      After Maven version
