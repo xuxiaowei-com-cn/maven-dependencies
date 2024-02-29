@@ -218,6 +218,24 @@ OPTIONS:
    --help, -h           show help
 ```
 
+```shell
+$ go run main.go dependency edit --help
+NAME:
+   maven-dependencies dependency edit - 修改 Maven 坐标
+
+USAGE:
+   maven-dependencies dependency edit [command options] [arguments...]
+
+OPTIONS:
+   --file-path value          File Path
+   --group-id value           Maven groupId
+   --artifact-id value        Maven artifactId
+   --after-group-id value     After Maven groupId
+   --after-artifact-id value  After Maven artifactId
+   --after-version value      After Maven version
+   --help, -h                 show help
+```
+
 ### test
 
 ```shell
