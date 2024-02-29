@@ -215,7 +215,6 @@ OPTIONS:
    --file-path value    File Path
    --group-id value     Maven groupId
    --artifact-id value  Maven artifactId
-   --version value      Maven version
    --help, -h           show help
 ```
 
