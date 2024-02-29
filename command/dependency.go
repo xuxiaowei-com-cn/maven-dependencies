@@ -65,7 +65,7 @@ func EditDependencyCommand() *cli.Command {
 
 			var dependencyResult types.Dependency
 			for _, dependency := range dependencies {
-				if dependency.GroupId == groupId && dependency.ArtifactId == artifactId && dependency.Version == version {
+				if dependency.GroupId == groupId && dependency.ArtifactId == artifactId {
 					dependencyResult.GroupId = dependency.GroupId
 					dependencyResult.GroupIdLine = dependency.GroupIdLine
 					dependencyResult.ArtifactId = dependency.ArtifactId
