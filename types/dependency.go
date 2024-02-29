@@ -27,8 +27,6 @@ func Context(str string) (string, error) {
 
 func Dependencies(str string) (Project, error) {
 	var project Project
-	var dependencies []Dependency
-	project.Dependencies = dependencies
 
 	lines := strings.Split(str, "\n")
 
@@ -210,11 +208,11 @@ func Dependencies(str string) (Project, error) {
 					}
 
 					if add {
-						dependency := dependencies[len(dependencies)-1]
+						dependency := project.Dependencies[len(project.Dependencies)-1]
 						dependency.GroupId = c
 						dependency.GroupIdLine = index + 1
 					} else {
-						dependencies = append(dependencies, Dependency{
+						project.Dependencies = append(project.Dependencies, Dependency{
 							GroupId:     c,
 							GroupIdLine: index + 1,
 						})
@@ -228,12 +226,12 @@ func Dependencies(str string) (Project, error) {
 					}
 
 					if add {
-						dependency := dependencies[len(dependencies)-1]
+						dependency := project.Dependencies[len(project.Dependencies)-1]
 						dependency.ArtifactId = c
 						dependency.ArtifactIdLine = index + 1
-						dependencies[len(dependencies)-1] = dependency
+						project.Dependencies[len(project.Dependencies)-1] = dependency
 					} else {
-						dependencies = append(dependencies, Dependency{
+						project.Dependencies = append(project.Dependencies, Dependency{
 							ArtifactId:     c,
 							ArtifactIdLine: index + 1,
 						})
@@ -246,12 +244,12 @@ func Dependencies(str string) (Project, error) {
 					}
 
 					if add {
-						dependency := dependencies[len(dependencies)-1]
+						dependency := project.Dependencies[len(project.Dependencies)-1]
 						dependency.Version = c
 						dependency.VersionLine = index + 1
-						dependencies[len(dependencies)-1] = dependency
+						project.Dependencies[len(project.Dependencies)-1] = dependency
 					} else {
-						dependencies = append(dependencies, Dependency{
+						project.Dependencies = append(project.Dependencies, Dependency{
 							Version:     c,
 							VersionLine: index + 1,
 						})
