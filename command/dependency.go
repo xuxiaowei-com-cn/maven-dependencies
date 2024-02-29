@@ -120,7 +120,7 @@ func EditDependencyCommand() *cli.Command {
 				}
 
 			} else {
-				log.Printf("Dependency not found")
+				log.Fatal("Dependency not found")
 			}
 
 			return nil
