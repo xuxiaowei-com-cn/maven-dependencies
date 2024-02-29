@@ -29,12 +29,12 @@ func ArtifactIdFlag(required bool) cli.Flag {
 	}
 }
 
-func VersionFlag() cli.Flag {
-	return &cli.StringFlag{
-		Name:  constant.Version,
-		Usage: "Maven version",
-	}
-}
+//func VersionFlag() cli.Flag {
+//	return &cli.StringFlag{
+//		Name:  constant.Version,
+//		Usage: "Maven version",
+//	}
+//}
 
 func AfterGroupIdFlag() cli.Flag {
 	return &cli.StringFlag{

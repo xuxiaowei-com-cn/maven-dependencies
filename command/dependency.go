@@ -17,7 +17,8 @@ func DependencyCommand() *cli.Command {
 		Usage: "Maven 坐标",
 		Flags: []cli.Flag{
 			flag.FilePathFlag(false),
-			flag.GroupIdFlag(false), flag.ArtifactIdFlag(false), flag.VersionFlag(),
+			flag.GroupIdFlag(false), flag.ArtifactIdFlag(false),
+			// flag.VersionFlag(),
 		},
 		Subcommands: []*cli.Command{
 			EditDependencyCommand(),
@@ -31,14 +32,15 @@ func EditDependencyCommand() *cli.Command {
 		Usage: "修改 Maven 坐标",
 		Flags: []cli.Flag{
 			flag.FilePathFlag(true),
-			flag.GroupIdFlag(true), flag.ArtifactIdFlag(true), flag.VersionFlag(),
+			flag.GroupIdFlag(true), flag.ArtifactIdFlag(true),
+			// flag.VersionFlag(),
 			flag.AfterGroupIdFlag(), flag.AfterArtifactIdFlag(), flag.AfterVersionFlag(),
 		},
 		Action: func(context *cli.Context) error {
 			var filePath = context.Path(constant.FilePath)
 			var groupId = context.String(constant.GroupId)
 			var artifactId = context.String(constant.ArtifactId)
-			var version = context.String(constant.Version)
+			// var version = context.String(constant.Version)
 			var afterGroupId = context.String(constant.AfterGroupId)
 			var afterArtifactId = context.String(constant.AfterArtifactId)
 			var afterVersion = context.String(constant.AfterVersion)
