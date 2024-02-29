@@ -11,6 +11,9 @@ type Project struct {
 	Version                string
 	VersionLine            int
 	VersionLeft            int
+	Description            string
+	DescriptionLine        int
+	DescriptionLeft        int
 	DistributionManagement DistributionManagement
 	DependencyManagement   DependencyManagement
 	Dependencies           []Dependency

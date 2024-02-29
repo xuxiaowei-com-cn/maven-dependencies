@@ -56,3 +56,11 @@ func AfterVersionFlag() cli.Flag {
 		Usage: "After Maven version",
 	}
 }
+
+func AfterDescriptionFlag(required bool) cli.Flag {
+	return &cli.StringFlag{
+		Name:     constant.AfterDescription,
+		Usage:    "After Maven description",
+		Required: required,
+	}
+}

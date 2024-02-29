@@ -127,6 +127,14 @@ func Dependencies(str string) (Project, error) {
 
 				project.Version = c
 				project.VersionLine = index + 1
+			} else if strings.HasPrefix(line, "<description") {
+				c, err := Context(line)
+				if err != nil {
+					return project, err
+				}
+
+				project.Description = c
+				project.DescriptionLine = index + 1
 			}
 		}
 

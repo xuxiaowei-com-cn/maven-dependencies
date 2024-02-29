@@ -60,6 +60,7 @@ func main() {
 		Commands: []*cli.Command{
 			command.DependencyCommand(),
 			command.CurrentCommand(),
+			command.DescriptionCommand(),
 		},
 	}
 
