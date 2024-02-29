@@ -60,13 +60,13 @@ func EditDependencyCommand() *cli.Command {
 				return err
 			}
 
-			_, _, dependencies, err := types.Dependencies(fileContext)
+			project, err := types.Dependencies(fileContext)
 			if err != nil {
 				return err
 			}
 
 			var dependencyResult types.Dependency
-			for _, dependency := range dependencies {
+			for _, dependency := range project.Dependencies {
 				if dependency.GroupId == groupId && dependency.ArtifactId == artifactId {
 					dependencyResult.GroupId = dependency.GroupId
 					dependencyResult.GroupIdLine = dependency.GroupIdLine

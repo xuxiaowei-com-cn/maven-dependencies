@@ -56,7 +56,7 @@ func EditCurrentCommand() *cli.Command {
 				return err
 			}
 
-			current, _, _, err := types.Dependencies(fileContext)
+			project, err := types.Dependencies(fileContext)
 			if err != nil {
 				return err
 			}
@@ -66,18 +66,18 @@ func EditCurrentCommand() *cli.Command {
 				if index != 0 {
 					result += "\n"
 				}
-				if current.GroupIdLine == index+1 && afterGroupId != "" {
+				if project.GroupIdLine == index+1 && afterGroupId != "" {
 					result += "<groupId>" + afterGroupId + "</groupId>"
-				} else if current.ArtifactIdLine == index+1 && afterArtifactId != "" {
+				} else if project.ArtifactIdLine == index+1 && afterArtifactId != "" {
 					result += "<artifactId>" + afterArtifactId + "</artifactId>"
-				} else if current.VersionLine == index+1 && afterVersion != "" {
+				} else if project.VersionLine == index+1 && afterVersion != "" {
 					result += "<version>" + afterVersion + "</version>"
 				} else {
 					result += line
 				}
 			}
 
-			if current.Version == "" && afterVersion != "" {
+			if project.Version == "" && afterVersion != "" {
 				lines := strings.Split(result, "\n")
 				result = ""
 
@@ -86,13 +86,13 @@ func EditCurrentCommand() *cli.Command {
 						result += "\n"
 					}
 					result += line
-					if current.ArtifactIdLine == index+1 && afterGroupId != "" {
+					if project.ArtifactIdLine == index+1 && afterGroupId != "" {
 						result += "\n<version>" + afterVersion + "</version>"
 					}
 				}
 			}
 
-			if current.GroupId == "" && afterGroupId != "" {
+			if project.GroupId == "" && afterGroupId != "" {
 				lines := strings.Split(result, "\n")
 				result = ""
 
@@ -101,7 +101,7 @@ func EditCurrentCommand() *cli.Command {
 						result += "\n"
 					}
 					result += line
-					if current.ArtifactIdLine == index+1 && afterGroupId != "" {
+					if project.ArtifactIdLine == index+1 && afterGroupId != "" {
 						result += "\n<groupId>" + afterGroupId + "</groupId>"
 					}
 				}

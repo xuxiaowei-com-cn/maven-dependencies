@@ -25,10 +25,10 @@ func Context(str string) (string, error) {
 	return strings.TrimRight(strings.TrimLeft(matches[0], ">"), "<"), nil
 }
 
-func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
-	var current Dependency
-	var parent Dependency
+func Dependencies(str string) (Project, error) {
+	var project Project
 	var dependencies []Dependency
+	project.Dependencies = dependencies
 
 	lines := strings.Split(str, "\n")
 
@@ -104,29 +104,29 @@ func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
 
 				c, err := Context(line)
 				if err != nil {
-					return current, parent, nil, err
+					return project, err
 				}
 
-				current.GroupId = c
-				current.GroupIdLine = index + 1
+				project.GroupId = c
+				project.GroupIdLine = index + 1
 
 			} else if strings.HasPrefix(line, "<artifactId") {
 				c, err := Context(line)
 				if err != nil {
-					return current, parent, nil, err
+					return project, err
 				}
 
-				current.ArtifactId = c
-				current.ArtifactIdLine = index + 1
+				project.ArtifactId = c
+				project.ArtifactIdLine = index + 1
 
 			} else if strings.HasPrefix(line, "<version") {
 				c, err := Context(line)
 				if err != nil {
-					return current, parent, nil, err
+					return project, err
 				}
 
-				current.Version = c
-				current.VersionLine = index + 1
+				project.Version = c
+				project.VersionLine = index + 1
 			}
 		}
 
@@ -135,29 +135,29 @@ func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
 
 				c, err := Context(line)
 				if err != nil {
-					return current, parent, nil, err
+					return project, err
 				}
 
-				parent.GroupId = c
-				parent.GroupIdLine = index + 1
+				project.Parent.GroupId = c
+				project.Parent.GroupIdLine = index + 1
 
 			} else if strings.HasPrefix(line, "<artifactId") {
 				c, err := Context(line)
 				if err != nil {
-					return current, parent, nil, err
+					return project, err
 				}
 
-				parent.ArtifactId = c
-				parent.ArtifactIdLine = index + 1
+				project.Parent.ArtifactId = c
+				project.Parent.ArtifactIdLine = index + 1
 
 			} else if strings.HasPrefix(line, "<version") {
 				c, err := Context(line)
 				if err != nil {
-					return current, parent, nil, err
+					return project, err
 				}
 
-				parent.Version = c
-				parent.VersionLine = index + 1
+				project.Parent.Version = c
+				project.Parent.VersionLine = index + 1
 			}
 		}
 
@@ -198,7 +198,7 @@ func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
 
 					c, err := Context(line)
 					if err != nil {
-						return current, parent, nil, err
+						return project, err
 					}
 
 					if add {
@@ -216,7 +216,7 @@ func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
 				} else if strings.HasPrefix(line, "<artifactId") {
 					c, err := Context(line)
 					if err != nil {
-						return current, parent, nil, err
+						return project, err
 					}
 
 					if add {
@@ -234,7 +234,7 @@ func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
 				} else if strings.HasPrefix(line, "<version") {
 					c, err := Context(line)
 					if err != nil {
-						return current, parent, nil, err
+						return project, err
 					}
 
 					if add {
@@ -254,5 +254,5 @@ func Dependencies(str string) (Dependency, Dependency, []Dependency, error) {
 		}
 	}
 
-	return current, parent, dependencies, nil
+	return project, nil
 }
