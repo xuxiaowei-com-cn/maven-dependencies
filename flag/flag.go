@@ -29,11 +29,10 @@ func ArtifactIdFlag(required bool) cli.Flag {
 	}
 }
 
-func VersionFlag(required bool) cli.Flag {
+func VersionFlag() cli.Flag {
 	return &cli.StringFlag{
-		Name:     constant.Version,
-		Usage:    "Maven version",
-		Required: required,
+		Name:  constant.Version,
+		Usage: "Maven version",
 	}
 }
 

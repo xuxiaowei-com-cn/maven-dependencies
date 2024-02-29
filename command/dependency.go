@@ -8,6 +8,7 @@ import (
 	"github.com/xuxiaowei-com-cn/maven-dependencies/types"
 	"log"
 	"os"
+	"strings"
 )
 
 func DependencyCommand() *cli.Command {
@@ -16,7 +17,7 @@ func DependencyCommand() *cli.Command {
 		Usage: "Maven 坐标",
 		Flags: []cli.Flag{
 			flag.FilePathFlag(false),
-			flag.GroupIdFlag(false), flag.ArtifactIdFlag(false), flag.VersionFlag(false),
+			flag.GroupIdFlag(false), flag.ArtifactIdFlag(false), flag.VersionFlag(),
 		},
 		Subcommands: []*cli.Command{
 			EditDependencyCommand(),
@@ -30,7 +31,7 @@ func EditDependencyCommand() *cli.Command {
 		Usage: "修改 Maven 坐标",
 		Flags: []cli.Flag{
 			flag.FilePathFlag(true),
-			flag.GroupIdFlag(true), flag.ArtifactIdFlag(true), flag.VersionFlag(true),
+			flag.GroupIdFlag(true), flag.ArtifactIdFlag(true), flag.VersionFlag(),
 			flag.AfterGroupIdFlag(), flag.AfterArtifactIdFlag(), flag.AfterVersionFlag(),
 		},
 		Action: func(context *cli.Context) error {
@@ -41,6 +42,11 @@ func EditDependencyCommand() *cli.Command {
 			var afterGroupId = context.String(constant.AfterGroupId)
 			var afterArtifactId = context.String(constant.AfterArtifactId)
 			var afterVersion = context.String(constant.AfterVersion)
+
+			if afterGroupId == "" && afterArtifactId == "" && afterVersion == "" {
+				log.Printf("未接收到修改结果，取消本次任务")
+				return nil
+			}
 
 			fileContext, err := file.ReadFileTrimSpace(filePath)
 			if err != nil {
@@ -88,6 +94,21 @@ func EditDependencyCommand() *cli.Command {
 						result += "<version>" + afterVersion + "</version>"
 					} else {
 						result += line
+					}
+				}
+
+				if dependencyResult.Version == "" && afterVersion != "" {
+					lines := strings.Split(result, "\n")
+					result = ""
+
+					for index, line := range lines {
+						if index != 0 {
+							result += "\n"
+						}
+						result += line
+						if groupIdLine == index+1 && afterGroupId != "" {
+							result += "\n<version>" + afterVersion + "</version>"
+						}
 					}
 				}
 
