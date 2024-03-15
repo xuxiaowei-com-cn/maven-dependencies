@@ -146,6 +146,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 # go env -w GOPROXY=https://mirrors.cloud.tencent.com/go,direct
 go get -u github.com/urfave/cli/v2
 go get -u github.com/xuxiaowei-com-cn/git-go@main
+go get -u github.com/stretchr/testify/assert
 ```
 
 ### mod
@@ -188,10 +189,9 @@ AUTHOR:
    徐晓伟 <xuxiaowei@xuxiaowei.com.cn>
 
 COMMANDS:
-   dependency   Maven 依赖坐标
-   current      Maven 当前坐标
-   description  Maven 描述
-   help, h      Shows a list of commands or help for one command
+   dependency  Maven 依赖坐标
+   current     Maven 当前坐标
+   help, h     Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
    --help, -h     show help
@@ -271,38 +271,6 @@ OPTIONS:
    --after-group-id value     After Maven groupId
    --after-artifact-id value  After Maven artifactId
    --after-version value      After Maven version
-   --help, -h                 show help
-```
-
-```shell
-$ go run main.go description --help
-NAME:
-   maven-dependencies description - Maven 描述
-
-USAGE:
-   maven-dependencies description command [command options]
-
-COMMANDS:
-   edit     修改 Maven 描述
-   help, h  Shows a list of commands or help for one command
-
-OPTIONS:
-   --file-path value          File Path
-   --after-description value  After Maven description
-   --help, -h                 show help
-```
-
-```shell
-$ go run main.go description edit --help
-NAME:
-   maven-dependencies description edit - 修改 Maven 描述
-
-USAGE:
-   maven-dependencies description edit [command options] [arguments...]
-
-OPTIONS:
-   --file-path value          File Path
-   --after-description value  After Maven description
    --help, -h                 show help
 ```
 
