@@ -59,7 +59,7 @@ jobs:
           ./cicd-release-linux-amd64
 
       - name: Upload Artifacts（xuxiaowei-com-cn/cicd-release）
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: cicd-release
           path: |
@@ -127,7 +127,7 @@ jobs:
         run: ls -l
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: maven-dependencies
           path: |
@@ -213,7 +213,7 @@ jobs:
           ./cicd-release-linux-amd64 pre-release gitlab --release-name=v0.0.0-${{ needs.build.outputs.YEAR_MONTH_DAY_HOUR_MINUTE }} --tag=v0.0.0-${{ needs.build.outputs.YEAR_MONTH_DAY_HOUR_MINUTE }} --auto-create-tag --gitlab-repository=$GITHUB_REPOSITORY --gitlab-username=$GITHUB_ACTOR --gitlab-token=${{ secrets.PRIVATE_GITLAB_TOKEN }} --release-body=${{ needs.build.outputs.RELEASE_BODY }} --package-name=cicd-release --artifacts=maven-dependencies-windows-amd64.exe --artifacts=maven-dependencies-windows-arm64.exe --artifacts=maven-dependencies-linux-amd64 --artifacts=maven-dependencies-linux-arm64 --artifacts=maven-dependencies-darwin-amd64 --artifacts=maven-dependencies-darwin-arm64 --artifacts=maven-dependencies-loong64 --gitlab-export-assets-file-name=gitlab-release-assets.json
 
       - name: Upload Artifacts（gitlab-release-assets.json）
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: gitlab-release-assets
           path: |
@@ -256,7 +256,7 @@ jobs:
           ./cicd-release-linux-amd64 pre-release gitlink --release-name=v0.0.0-${{ needs.build.outputs.YEAR_MONTH_DAY_HOUR_MINUTE }} --tag=v0.0.0-${{ needs.build.outputs.YEAR_MONTH_DAY_HOUR_MINUTE }} --auto-create-tag --gitlink-repository=$GITHUB_REPOSITORY --gitlink-username=${{ secrets.PRIVATE_GITLINK_USERNAME }} --gitlink-token=${{ secrets.PRIVATE_GITLINK_TOKEN }} --release-body=${{ needs.build.outputs.RELEASE_BODY }} --artifacts=maven-dependencies-windows-amd64.exe --artifacts=maven-dependencies-windows-arm64.exe --artifacts=maven-dependencies-linux-amd64 --artifacts=maven-dependencies-linux-arm64 --artifacts=maven-dependencies-darwin-amd64 --artifacts=maven-dependencies-darwin-arm64 --artifacts=maven-dependencies-loong64  --gitlink-cookie=${{ secrets.PRIVATE_GITLINK_COOKIE }} --gitlink-export-assets-file-name=gitlink-release-assets.json
 
       - name: Upload Artifacts（gitlink-release-assets.json）
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: gitlink-release-assets
           path: |
