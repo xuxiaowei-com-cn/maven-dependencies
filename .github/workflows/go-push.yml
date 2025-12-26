@@ -27,6 +27,7 @@ jobs:
     permissions:
       actions: read
       repository-projects: read
+      contents: read
 
     strategy:
       matrix:
