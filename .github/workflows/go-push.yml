@@ -24,6 +24,9 @@ jobs:
       YEAR_MONTH_DAY_HOUR_MINUTE: ${{ steps.set_current_date_output.outputs.YEAR_MONTH_DAY_HOUR_MINUTE }}
       RELEASE_BODY: ${{ env.RELEASE_BODY }}
 
+    permissions:
+      actions: read
+
     strategy:
       matrix:
         os: [ "ubuntu-latest" ]
