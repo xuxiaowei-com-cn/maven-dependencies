@@ -1,14 +1,15 @@
 package command
 
 import (
+	"log"
+	"os"
+	"strings"
+
 	"github.com/urfave/cli/v2"
 	"github.com/xuxiaowei-com-cn/maven-dependencies/constant"
 	"github.com/xuxiaowei-com-cn/maven-dependencies/file"
 	"github.com/xuxiaowei-com-cn/maven-dependencies/flag"
 	"github.com/xuxiaowei-com-cn/maven-dependencies/types"
-	"log"
-	"os"
-	"strings"
 )
 
 func CurrentCommand() *cli.Command {
@@ -86,7 +87,7 @@ func EditCurrentCommand() *cli.Command {
 						result += "\n"
 					}
 					result += line
-					if project.ArtifactIdLine == index+1 && afterGroupId != "" {
+					if project.ArtifactIdLine == index+1 {
 						result += "\n<version>" + afterVersion + "</version>"
 					}
 				}
