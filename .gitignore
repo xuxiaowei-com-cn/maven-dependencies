@@ -34,8 +34,6 @@ build/
 
 /*.exe
 /*/*.exe
-/maven-dependencies-windows-*
-/maven-dependencies-linux-*
-/maven-dependencies-darwin-*
+/maven-dependencies*
 
 /buildinfo/buildinfo
