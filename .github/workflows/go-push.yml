@@ -158,13 +158,13 @@ jobs:
           fetch-depth: 0
 
       - name: Download Artifacts（xuxiaowei-com-cn/cicd-release）
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: cicd-release
           path: .
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: maven-dependencies
           path: .
@@ -194,13 +194,13 @@ jobs:
           fetch-depth: 0
 
       - name: Download Artifacts（xuxiaowei-com-cn/cicd-release）
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: cicd-release
           path: .
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: maven-dependencies
           path: .
@@ -237,13 +237,13 @@ jobs:
           fetch-depth: 0
 
       - name: Download Artifacts（xuxiaowei-com-cn/cicd-release）
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: cicd-release
           path: .
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: maven-dependencies
           path: .
@@ -282,13 +282,13 @@ jobs:
           fetch-depth: 0
 
       - name: Download Artifacts（xuxiaowei-com-cn/cicd-release）
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: cicd-release
           path: .
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: maven-dependencies
           path: .
@@ -303,7 +303,7 @@ jobs:
         run: ls -l
 
       - name: Download Artifacts（gitlab-release-assets.json）
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: gitlab-release-assets
           path: .
@@ -326,13 +326,13 @@ jobs:
           fetch-depth: 0
 
       - name: Download Artifacts（xuxiaowei-com-cn/cicd-release）
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: cicd-release
           path: .
 
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: maven-dependencies
           path: .
@@ -347,7 +347,7 @@ jobs:
         run: ls -l
 
       - name: Download Artifacts（gitlink-release-assets.json）
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: gitlink-release-assets
           path: .
