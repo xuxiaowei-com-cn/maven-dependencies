@@ -120,7 +120,8 @@ func EditDependencyCommand() *cli.Command {
 				}
 
 			} else {
-				log.Fatal("Dependency not found")
+				log.Fatalf("未找到依赖: %s:%s，请检查 --%s、--%s 与文件 %s 中的 dependencies 是否匹配",
+					groupId, artifactId, constant.GroupId, constant.ArtifactId, filePath)
 			}
 
 			return nil
